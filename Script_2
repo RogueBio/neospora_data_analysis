@@ -1,0 +1,17 @@
+library(survey)
+
+district_population <- Neospora %>%
+  group_by(district_name) %>%
+  summarise(total_population = n())
+
+sample_size <- Neospora %>%
+  group_by(district_name) %>%
+  summarise(sampled_animals = n())
+
+weights_data <- merge(sample_size, district_population, by = "district_name")
+
+weights_data <- weights_data %>%
+  mutate(
+    selection_prob = sampled_animals / total_population,
+    sampling_weight = 1 / selection_prob
+  )
