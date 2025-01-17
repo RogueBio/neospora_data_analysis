@@ -1,0 +1,506 @@
+##Load file
+
+Neospora <- read.csv("Data analysis/Original File/adgg_questionnaire_test_all_+redonePCR_20221230.csv")
+
+## Fix placenta burry issue
+
+Neospora %<>%
+  mutate(
+    placentaf = ifelse(
+      placenta == 'burry',
+      'bury',
+      placenta
+    )
+  )
+Neospora$placentaf
+
+
+## Make placenta binary
+
+Neospora %<>%
+  mutate(
+    placebin = case_when(
+      Neospora$placentaf == 'feed_other' ~ "Remain",
+      Neospora$placentaf == 'bury' ~ "Remain",
+      Neospora$placentaf == 'leave' ~ "Remain",
+      Neospora$placentaf == 'throw' ~ "Destroy",
+      Neospora$placentaf == 'burn' ~ "Destroy",
+      TRUE ~ NA_character_
+    )
+  )
+Neospora$placebin
+
+## Make age discrete
+boxplot(Neospora$animalage)
+
+
+Neospora %<>%
+  mutate(
+    Animalagef = ifelse(
+      Neospora$animalage < 6,
+      "0-6",
+      "> 6"
+    )
+  )
+
+Neospora$Animalagef
+
+## Make calf number discrete
+
+Neospora %<>%
+  mutate(
+    Calfnof = case_when(
+      Neospora$calfnumber >= 1 & Neospora$calfnumber <= 1 ~ "0-1",
+      Neospora$calfnumber >= 2 & Neospora$calfnumber <= 3 ~ "1-3",
+      Neospora$calfnumber >= 4 & Neospora$calfnumber <= 6 ~ "3-6",
+      Neospora$calfnumber > 6 ~ ">6",
+      TRUE ~ NA_character_
+    )
+  )
+
+Neospora$Calfnof
+
+## Make calf number binary
+
+Neospora %<>%
+  mutate(
+    Calfnbin = case_when(
+      Neospora$calfnumber >= 1 & Neospora$calfnumber <= 2 ~ "0-2",
+      Neospora$calfnumber > 2 ~ ">2",
+      TRUE ~ NA_character_
+    )
+  )
+
+Neospora$Calfnbin
+
+
+## Fix animals
+
+# 1. Sheep
+
+Neospora %<>%
+  mutate(
+    sheep = ifelse(
+      cont_sheep == 'have_sheep',
+      'yes',
+      ifelse(cont_sheep == 'no_sheep',
+             'no',
+             cont_sheep)
+    )
+  )
+
+Neospora$sheep
+
+# Make binary
+
+Neospora %<>%
+  mutate(
+    sheepbin = ifelse(
+      sheep == 'neigh_has_sheep',
+      'yes',
+      ifelse(sheep == 'no_sheep',
+             'no',
+             sheep)
+    )
+  )
+
+Neospora$sheepbin
+
+# 2. Goat
+
+Neospora %<>%
+  mutate(
+    goat = ifelse(
+      cont_goats == 'have_goat',
+      'yes',
+      ifelse(cont_goats == 'no_goat',
+             'no',
+             cont_goats)
+    )
+  )
+
+Neospora$goat
+
+# Make binary
+
+Neospora %<>%
+  mutate(
+    goatbin = ifelse(
+      goat == 'neigh_has_goat',
+      'yes',
+      ifelse(goat == 'no_goat',
+             'no',
+             goat)
+    )
+  )
+
+Neospora$goatbin
+
+
+# 3. Pig
+
+Neospora %<>%
+  mutate(
+    pig = ifelse(
+      cont_pigs == 'have_pig',
+      'yes',
+      ifelse(cont_pigs == 'no_pig',
+             'no',
+             cont_pigs)
+    )
+  )
+
+# Make binary
+
+Neospora %<>%
+  mutate(
+    pigbin = ifelse(
+      pig == 'neigh_has_pig',
+      'yes',
+      ifelse(pig == 'no_pig',
+             'no',
+             pig)
+    )
+  )
+
+Neospora$pigbin
+
+
+# 5. Dogs
+
+Neospora %<>%
+  mutate(
+    dog = ifelse(
+      cont_dogs == 'have_dog',
+      'yes',
+      ifelse(cont_dogs == 'no_dog',
+             'no',
+             cont_dogs)
+    )
+  )
+
+Neospora$dog
+
+# Make binary
+
+Neospora %<>%
+  mutate(
+    dogbin = ifelse(
+      dog == 'neigh_has_dog',
+      'yes',
+      ifelse(dog == 'no_dog',
+             'no',
+             dog)
+    )
+  )
+
+Neospora$dogbin
+
+
+# 5. Cats
+
+Neospora %<>%
+  mutate(
+    cat = ifelse(
+      cont_cats == 'have_cat',
+      'yes',
+      ifelse(cont_cats == 'no_cat',
+             'no',
+             cont_cats)
+    )
+  )
+
+Neospora$cat
+
+Neospora %<>%
+  mutate(
+    catbin = ifelse(
+      cat == 'neigh_has_cat',
+      'yes',
+      ifelse(cat == 'no_cat',
+             'no',
+            cat)
+    )
+  )
+
+Neospora$catbin
+
+# Make abortion binary
+
+Neospora %<>%
+  mutate(
+    abortbin = ifelse(
+      abortion == 'dnk',
+      '0',
+      ifelse(yes = 'yes', no = 'no',
+             abortion)
+    )
+  )
+
+## Make water binary
+
+Neospora$water
+
+Neospora %<>%
+  mutate(
+    waterbin = ifelse(
+      water == 'well',
+      'natural source',
+      ifelse(water == 'river',
+             'natural source',
+             water)
+    )
+  )
+
+## Make pasture binary
+
+Neospora %<>%
+  mutate(
+    feeding = ifelse(
+      management == 'zero-pasture',
+      'pasture',
+      ifelse(management == 'zero-graze',
+             'zero-graze',
+             management)
+    )
+  )
+
+## Make region binary
+
+Neospora %<>%
+  mutate(
+    regionbin1 = ifelse(
+      region == 'Arusha',
+      'Northern Region',
+      ifelse(region == 'Kilimanjaro',
+             'Northern Region',
+             region)
+    )
+  )
+
+Neospora %<>%
+  mutate(
+    regionbin2 = ifelse(
+      regionbin1 == 'Iringa',
+      'Southern Region',
+      ifelse(regionbin1 == 'Mbeya',
+             'Southern Region',
+             regionbin1)
+    )
+  )
+
+Neospora %<>%
+  mutate(
+    regionbin3 = ifelse(
+      regionbin2 == 'Njombe',
+      'Southern Region',
+      ifelse(regionbin2 == 'Tanga',
+             'Northern Region',
+             regionbin2)
+    )
+  )
+
+Neospora$regionbin3
+
+
+##Fix Breeds
+
+Neospora %<>%
+  mutate(
+    breedsfixed = ifelse(
+      breed == 'SHZ-X-ayrshire',
+      'SHZ-X-Ayrshire',
+      ifelse(breed == 'SHZ-X-fresian',
+             'SHZ-X-Fresian',
+             breed)
+    )
+  )
+
+Neospora$breedsfixed
+
+Neospora %<>%
+  mutate(
+    breedsfixed1 = ifelse(
+      breedsfixed == 'SHZ-X-jersey',
+      'SHZ-X-Jersey',
+      ifelse(breedsfixed == 'SHZ-X-Friesian',
+             'SHZ-X-Fresian',
+             breedsfixed)
+    )
+  )
+
+Neospora %<>%
+  mutate(
+    breedsfixed2 = ifelse(
+      breedsfixed1 == 'Ayrshire Cross',
+      'SHZ-X-Ayrshire',
+             breedsfixed1)
+    )
+  
+
+Neospora %<>%
+  mutate(
+    calfstat = ifelse(
+        calfstatus == 'weakntsur',
+      'Unhealthy',
+      ifelse(calfstatus == 'weaksur',
+             'Unhealthy',
+             calfstatus)
+    )
+  )
+
+Neospora %<>%
+  mutate(
+    calfoutc = ifelse(
+      calfstatus == 'weakntsur',
+      'Died',
+      ifelse(calfstatus == 'weaksur',
+             'health',
+             calfstatus)
+    )
+  )
+
+head(Neospora)
+
+Neospora %<>%
+  mutate(
+    calfstat = ifelse(
+      calfstatus == 'weakntsur',
+      'Unhealthy',
+      ifelse(calfstatus == 'weaksur',
+             'Unhealthy',
+             calfstatus)
+    )
+  )
+
+Neospora %<>%
+  mutate(
+    Experience = ifelse(
+      Neospora$cattleyears < 5,
+      "0-5",
+      "> 5"
+    )
+  )
+
+Neospora %<>%
+  mutate(
+    newanimalsb = ifelse(
+      newanimals == 'neighbour',
+      'yes',
+      ifelse(newanimals == 'market',
+             'yes',
+             newanimals)
+    )
+  )
+
+Neospora %<>%
+  mutate(
+    newanimalsbin = ifelse(
+      newanimalsb == 'gift',
+      'yes',
+      ifelse(newanimalsb == 'experience',
+             'yes',
+             newanimalsb)
+    )
+  )
+Neospora$newanimalsbin
+
+Neospora$calvingassistbin
+
+Neospora %<>%
+  mutate(
+    calvingassistb = ifelse(
+      calvingassist == 'respond',
+      'Domestic',
+      ifelse(calvingassist == 'family',
+             'Domestic',
+             calvingassist)
+    )
+  )
+Neospora %<>%
+  mutate(
+    calvingassistbin = ifelse(
+      calvingassistb == 'owner',
+      'Domestic',
+             calvingassistb)
+    )
+Neospora %<>%
+  mutate(
+    educationfixed = ifelse(
+      education == 'tertiart',
+      'mid-level',
+      ifelse(education == 'tertiary',
+             'mid-level',
+             education)
+    )
+  )
+Neospora %<>%
+  mutate(
+    educationb = ifelse(
+      educationfixed == 'none',
+      'basic/none',
+      ifelse(educationfixed == 'primary',
+             'basic/none',
+             educationfixed)
+    )
+  )
+Neospora %<>%
+  mutate(
+    educationbin = ifelse(
+      educationb == 'secondary',
+      'mid-level',
+             educationb)
+    )
+
+Neospora %<>%
+  mutate(
+    distancebin = ifelse(
+      distance == '100to500',
+      'more100',
+      ifelse(distance == 'more500',
+             'more100',
+             distance)
+    )
+  )
+
+### Calculate age of the calves
+
+Neospora$calfage<- difftime(Neospora$dateofcolletion, Neospora$calfdate, units = "days")/ 365.25
+   
+## Categorise variables that are continuous
+
+
+#Herd size
+
+Neospora %<>%
+  mutate(
+    cat_herdsize = ifelse(
+      herdsize > 5,
+      "Large",
+      "Small"
+    )
+  )
+
+Neospora$cat_herdsize
+
+# Cat altitude
+
+boxplot(Neospora$gps_altitude)
+altitude<- (as.numeric(Neospora$gps_altitude))
+
+Neospora %<>%
+  mutate(
+    cat_altitude = ifelse(gps_altitude > 500, ">500", "<=500")
+  )
+
+Neospora <- Neospora %>%
+  mutate(
+    cat_altitude_plus = cut(
+      gps_altitude,
+      breaks = c(0, 200, 500, 1200, Inf),
+      labels = c("0-200", "200-500", "500-1200", "More than 1200"),
+      include.lowest = TRUE
+    )
+  )
+
+Neospora$lepto_elisa_pn <- ifelse(Neospora$lepto_elisa_pn == "POSITIVE", 1, 0)
