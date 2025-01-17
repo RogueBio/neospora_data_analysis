@@ -1,3 +1,8 @@
+setwd('/Users/ainhoarodriguezpereira/Documents/LIDo DTP PhD/Rotation 2')
+
+library(magrittr)
+require(tidyverse)
+
 ##Load file
 
 Neospora <- read.csv("Data analysis/Original File/adgg_questionnaire_test_all_+redonePCR_20221230.csv")
