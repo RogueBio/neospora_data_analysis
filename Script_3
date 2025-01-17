@@ -1,0 +1,198 @@
+## Climate information
+
+## Merge columns from my climate file and Enrique's
+
+DF1 <- read.csv("/Users/ainhoarodriguezpereira/Documents/LIDo DTP PhD/Rotation 2/Data analysis/Climatic variables - Ainhoa/ctlgh_tza_climate_variables_230413.csv")
+
+DF1$animalid
+  
+DF2 <- read.csv("/Users/ainhoarodriguezpereira/Documents/LIDo DTP PhD/Rotation 2/Data analysis/Climatic variables - Ainhoa/Enrique/adgg_climatic_variables_v09012023.csv")
+
+Neosporaclim <- merge(DF1, DF2[, c("animalid", "bio1_37", "bio2_37", "bio3_37", "bio4_37", "bio5_37", "bio6_37", "bio7_37", "bio8_37", "bio9_37", "bio10_37", "bio11_37", "bio12_37", "bio13_37", "bio14_37", "bio15_37", "bio16_37", "bio17_37", "bio18_37", "bio19_37")], by = "animalid")
+
+#Change temperatures (currently 100 need to be 10.0)
+
+Neosporaclim$bio1_37 <- sprintf("%.1f", Neosporaclim$bio1_37/10)
+Neosporaclim$bio2_37 <- sprintf("%.1f", Neosporaclim$bio2_37/10)
+Neosporaclim$bio3_37 <- sprintf("%.1f", Neosporaclim$bio3_37/10)
+Neosporaclim$bio4_37 <- sprintf("%.1f", Neosporaclim$bio4_37/10)
+Neosporaclim$bio5_37 <- sprintf("%.1f", Neosporaclim$bio5_37/10)
+Neosporaclim$bio6_37 <- sprintf("%.1f", Neosporaclim$bio6_37/10)
+Neosporaclim$bio7_37 <- sprintf("%.1f", Neosporaclim$bio7_37/10)
+Neosporaclim$bio8_37 <- sprintf("%.1f", Neosporaclim$bio8_37/10)
+Neosporaclim$bio9_37 <- sprintf("%.1f", Neosporaclim$bio9_37/10)
+Neosporaclim$bio10_37 <- sprintf("%.1f", Neosporaclim$bio10_37/10)
+Neosporaclim$bio11_37 <- sprintf("%.1f", Neosporaclim$bio11_37/10)
+Neosporaclim$bio12_37 <- sprintf("%.1f", Neosporaclim$bio12_37/10)
+Neosporaclim$bio13_37 <- sprintf("%.1f", Neosporaclim$bio13_37/10)
+Neosporaclim$bio14_37 <- sprintf("%.1f", Neosporaclim$bio14_37/10)
+Neosporaclim$bio15_37 <- sprintf("%.1f", Neosporaclim$bio15_37/10)
+Neosporaclim$bio16_37 <- sprintf("%.1f", Neosporaclim$bio16_37/10)
+Neosporaclim$bio17_37 <- sprintf("%.1f", Neosporaclim$bio17_37/10)
+Neosporaclim$bio18_37 <- sprintf("%.1f", Neosporaclim$bio18_37/10)
+Neosporaclim$bio19_37 <- sprintf("%.1f", Neosporaclim$bio19_37/10)
+
+for (i in 1:19) {
+  column_name <- paste0("bio", i, "_37")
+  Neosporaclim[, column_name] <- as.numeric(Neosporaclim[, column_name])
+}
+
+## Categorising bioclimatic variables
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio1 = case_when(
+    bio1_37 < 20 ~ "lessthan 20",
+    bio1_37 > 20 ~ "morethan 20",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio3 = case_when(
+    bio3_37 < 6.5 ~ "lessthan 6.5",
+    bio3_37 > 6.5 ~ "morethan 6.5",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio4 = case_when(
+    bio4_37 < 140 ~ "lessthan 140",
+    bio4_37 > 140 ~ "morethan 140",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio7 = case_when(
+    bio7_37 < 15 ~ "lessthan 15",
+    bio7_37 > 15 ~ "morethan 15",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio8 = case_when(
+    bio8_37 < 24 ~ "lessthan 24",
+    bio8_37 > 24 ~ "morethan 24",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio9 = case_when(
+    bio9_37 < 24 ~ "lessthan 24",
+    bio9_37 > 24 ~ "morethan 24",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio10 = case_when(
+    bio10_37 < 20 ~ "lessthan 20",
+    bio10_37 > 20 ~ "morethan 20",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio11 = case_when(
+    bio11_37 < 20 ~ "lessthan 20",
+    bio11_37 > 20 ~ "morethan 20",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio12 = case_when(
+    bio12_37 < 130 ~ "lessthan 130",
+    bio12_37 > 130 ~ "morethan 130",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio12plus = case_when(
+    bio12_37 >= 0 & bio12_37 <= 130 ~ "0-130",
+    bio12_37 >= 131 & bio12_37 <= 200 ~ "131–200",
+    bio12_37 >= 201 & bio12_37 <= 350 ~ "201–350",
+    bio12_37 > 350 ~ "morethan 350",
+    TRUE ~ NA_character_  ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio13 = case_when(
+    bio13_37 < 35 ~ "lessthan 35",
+    bio13_37 > 35 ~ "morethan 35",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio14 = case_when(
+    bio14_37 < 4.5 ~ "lessthan 4.5",
+    bio14_37 > 4.5 ~ "morethan 4.5",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio15 = case_when(
+    bio15_37 < 7.5 ~ "lessthan 7.5",
+    bio15_37 > 7.5 ~ "morethan 7.5",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio16plus = case_when(
+    bio16_37 >= 0 & bio16_37 <= 45 ~ "0-45",
+    bio16_37 >= 45 & bio16_37 <= 85 ~ "45–85",
+    bio16_37 > 85 ~ "morethan 85",
+    TRUE ~ NA_character_  ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio16 = case_when(
+    bio16_37 < 80 ~ "lessthan 80",
+    bio16_37 > 80 ~ "morethan 80",
+    TRUE ~ NA_character_ ))
+
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio17 = case_when(
+    bio17_37 < 15 ~ "lessthan 15",
+    bio17_37 > 15 ~ "morethan 15",
+    TRUE ~ NA_character_ ))
+
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio18 = case_when(
+    bio18_37 < 40 ~ "lessthan 40",
+    bio18_37 > 40 ~ "morethan 40",
+    TRUE ~ NA_character_ ))
+
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_bio19 = case_when(
+    bio19_37 < 15 ~ "lessthan 15",
+    bio19_37 > 15 ~ "morethan 15",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_popden = case_when(
+    pop_density >= 0 & pop_density <= 15 ~ "0-15",
+    pop_density >= 25 & pop_density <= 40 ~ "25-40",
+    pop_density > 40 ~ "morethan 40",
+    TRUE ~ NA_character_  ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_gpsalt = case_when(
+    gps_altitude < 500 ~ "lessthan 500",
+    gps_altitude > 500 ~ "morethan 500",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim<- Neosporaclim %>%
+  mutate(cat_gpsalt2 = case_when(
+    gps_altitude < 500 ~ "lessthan 500",
+    gps_altitude > 500 & gps_altitude < 1000 ~ "500-1000",
+    gps_altitude > 1000 & gps_altitude < 1500 ~ "1000-1500",
+    gps_altitude > 1500 ~ "greaterthan 1500",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_solar = case_when(
+    solar_radiation < 5.25 ~ "lessthan 5.25",
+    solar_radiation > 5.25 ~ "morethan 5.25",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim <- Neosporaclim %>% 
+  mutate(cat_wind = case_when(
+    wind_speed < 6 ~ "lessthan 6",
+    wind_speed > 6 ~ "morethan 6",
+    TRUE ~ NA_character_ ))
+
+Neosporaclim['land_cover_factor'] = Neosporaclim['land_cover_fct']
+
+Neosporaclim <- Neosporaclim %>%
+  mutate(value = 1) %>%  
+  pivot_wider(
+    names_from = land_cover_fct,  
+    values_from = value,         
+    values_fill = list(value = 0)  
+  )
+
