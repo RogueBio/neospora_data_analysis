@@ -1,0 +1,106 @@
+#Script_5 Global Model
+
+
+## Re-running of models - just district random 
+Neosporaclim$Calfnof <- as.factor(Neosporaclim$Calfnof)
+levels(Neosporaclim$Calfnof)
+levels(Neosporaclim$Calfnof) <- c("0-1", "1-3", "3-6", ">6")
+str(Neosporaclim$Calfnof)
+
+Neosporaclim$cat_gpsalt2 <- as.factor(Neosporaclim$cat_gpsalt2)
+levels(Neosporaclim$cat_gpsalt2)
+levels(Neosporaclim$cat_gpsalt2) <- c("lessthan 500", "500-1000", "1000-1500", "greaterthan 1500")
+str(Neosporaclim$cat_gpsalt2)
+
+
+NM1 <- glmer(neospora_elisa_pn ~ breed + Calfnof 
+             + placenta + management + water + cat_gpsalt2 + 
+               distance + land_cover_factor + cat_bio3 + cat_bio8 + 
+               cat_bio10 + cat_bio12 + cat_bio16 + cat_bio18 +
+               (1 | district_name), data = Neosporaclim, family = binomial(),
+             control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+summary(NM1)
+
+## Check for multicolinearity
+
+library(car)
+vif(NM1)
+
+##
+
+NM2 <- glmer(neospora_elisa_pn ~ breed + Calfnof 
+             + placenta + management + water + cat_gpsalt2 + 
+               distance + land_cover_factor + cat_bio3 +  
+               cat_bio10 + cat_bio12 + cat_bio16 + cat_bio18 +
+               (1 | district_name), data = Neosporaclim, family = binomial(),
+             control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+summary(NM2)
+
+#
+
+
+NM3 <- glmer(neospora_elisa_pn ~ breed + Calfnof 
+             + placenta + management + water + cat_gpsalt2 + 
+               distance + land_cover_factor + cat_bio3 +  
+                cat_bio12 + cat_bio16 + cat_bio18 +
+               (1 | district_name), data = Neosporaclim, family = binomial(),
+             control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+summary(NM3)
+vif(NM3)
+
+NM4 <- glmer(neospora_elisa_pn ~ breed + Calfnof 
+             + placenta + management + water + cat_gpsalt2 + 
+               distance + land_cover_factor + cat_bio3 +  
+                cat_bio16 + cat_bio18 +
+               (1 | district_name), data = Neosporaclim, family = binomial(),
+             control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+summary(NM4)
+vif(NM4)
+
+NM5 <- glmer(neospora_elisa_pn ~  Calfnof 
+             + placenta + management + water + cat_gpsalt2 + 
+               distance + land_cover_factor + cat_bio3 +  
+               cat_bio16 + cat_bio18 +
+               (1 | district_name), data = Neosporaclim, family = binomial(),
+             control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+summary(NM5)
+vif(NM5)
+
+NM6 <- glmer(neospora_elisa_pn ~  Calfnof 
+             +  management + water + cat_gpsalt2 + 
+               distance + land_cover_factor + cat_bio3 +  
+               cat_bio16 + cat_bio18 +
+               (1 | district_name), data = Neosporaclim, family = binomial(),
+             control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+summary(NM6)
+vif(NM6)
+
+NM7 <- glmer(neospora_elisa_pn ~  Calfnof 
+             +  management +  cat_gpsalt2 + 
+               distance + land_cover_factor + cat_bio3 +  
+               cat_bio16 + cat_bio18 +
+               (1 | district_name), data = Neosporaclim, family = binomial(),
+             control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+summary(NM7)
+vif(NM7)
+
+NM8 <- glmer(neospora_elisa_pn ~  Calfnof 
+             +  management +  cat_gpsalt2 + 
+                land_cover_factor + cat_bio3 +  
+               cat_bio16 + cat_bio18 +
+               (1 | district_name), data = Neosporaclim, family = binomial(),
+             control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+summary(NM8)
+vif(NM8)
+
+NM9 <- glmer(neospora_elisa_pn ~  Calfnof 
+             +  management +  cat_gpsalt2 + 
+               cat_bio3 +  
+               cat_bio16 + cat_bio18 +
+               (1 | district_name), data = Neosporaclim, family = binomial(),
+             control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+summary(NM9)
+library(MuMIn)
+r2_values <- r.squaredGLMM(NM9)
+
+
