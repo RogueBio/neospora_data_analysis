@@ -1,0 +1,90 @@
+library(factoextra)
+library(dplyr)
+library(reshape2)
+# Create a vector of columns to select
+columns_to_select <- c("animalid", "pop_density","gps_altitude","wind_speed", "solar_radiation", "bare_areas" ,"built_up" ,  "cropland" ,  "grassland",  "shrubs"  ,   "tree", 
+                        "bio1_37", "bio2_37", "bio3_37", "bio4_37", "bio5_37", "bio6_37", "bio7_37", 
+                        "bio8_37", "bio9_37", "bio10_37", "bio11_37", "bio12_37", "bio13_37", 
+                        "bio14_37", "bio15_37", "bio16_37", "bio17_37", "bio18_37", "bio19_37")
+
+
+# Create a subset of Neo df poraclimser with selected columns
+Neo_subset <- Neosporaclim %>%
+  dplyr:: select(all_of(columns_to_select))
+
+# Filter only numeric columns
+Neo_subset_numeric <- Neo_subset %>%
+  select_if(is.numeric)
+
+# Remove rows with missing values
+Neo_subset_filtered <- na.omit(Neo_subset_numeric)
+
+# Check column names of Neo_subset_filtered
+names(Neo_subset_filtered)
+
+# Perform PCA
+pca <- prcomp(Neo_subset_filtered, scale. = TRUE)
+
+scree_plot <- fviz_eig(pca, addlabels = TRUE,
+                       xlab = "Principal Component Number", 
+                       ylab = "Proportion of Explained Variance")
+
+
+fviz_pca_var(pca, col.var = "cos2",
+             gradient.cols = c("darkgreen", "yellow", "darkred"),
+             repel = TRUE)
+
+fviz_pca_ind(pca, axes = c(1, 2), geom = "point",
+             col.ind = "cos2",
+             gradient.cols = c("blue", "yellow", "red"), 
+             repel = TRUE) + 
+  theme_bw() + 
+  labs(title = "PCA: PC1 vs PC2")
+
+pc_scores <- predict(pca, Neo_subset_filtered)
+pc1 <- pc_scores[, 1]
+pc2 <- pc_scores[, 2]
+pc3 <- pc_scores[, 3]
+
+num_rows <- nrow(Neosporaclim)
+
+# Subsetting principal component scores to match the number of rows
+pc1_subset <- pc1[1:num_rows]
+pc2_subset <- pc2[1:num_rows]
+pc3_subset <- pc3[1:num_rows]
+
+# Combining Neo df with the subsetted principal component scores
+Neospora_with_pcs <- cbind(Neosporaclim, pc1_subset, pc2_subset, pc3_subset)
+
+loadings <- pca$rotation
+loadings_subset <- loadings[, 1:3]
+library(pheatmap)
+pheatmap(loadings_subset,
+         cluster_rows = FALSE,  # Do not cluster rows
+         cluster_cols = TRUE,   # Cluster columns (PCs)
+         scale = "none",        # Do not scale the values
+         color = colorRampPalette(c("blue", "white", "red"))(100),  # Color gradient
+         main = "Loadings Heatmap for PC1, PC2, and PC3",
+         fontsize = 10)
+loadings_long <- melt(loadings_subset)
+
+ggplot(loadings_long, aes(x = Var2, y = Var1, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(
+    low = "navy", mid = "white", high = "firebrick3", midpoint = 0,
+    name = "Loadings"
+  ) +
+  labs(
+    x = "Principal Components",
+    y = "Variables",
+    title = "Loadings Heatmap for PC1, PC2, and PC3"
+  ) +
+  theme_minimal(base_size = 15) +  # Use minimal theme with larger base size for better readability
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Angle and size for x-axis labels
+    axis.text.y = element_text(size = 12),  # Size for y-axis labels
+    plot.title = element_text(size = 16, face = "bold")  # Title styling
+  ) +
+  scale_x_discrete(labels = c("PC1", "PC2", "PC3"))
+
+
