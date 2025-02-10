@@ -12,4 +12,4 @@ Script 03: Adding bioclimatic variables to main dataset (from Enrique's datafile
 
 Script 04: Preparation of dataset for modelling, coercing variables
 
-
+Script 05: Running of Global Model
