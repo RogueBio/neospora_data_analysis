@@ -12,6 +12,8 @@ Script 03: Adding bioclimatic variables to main dataset (from Enrique's datafile
 
 Script 04: Preparation of dataset for modelling, coercing variables
 
-Script 05: Running of Global Model
+Script 05: Running of Global Generalized Linear Mixed-Effects Model (GLMER)
 
 Script 06: Principal Component Analysis (PCA) of dataset 
+
+Script 07: Global Model (GLMER) of PCA 
