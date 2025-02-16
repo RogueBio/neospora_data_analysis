@@ -75,8 +75,8 @@ Neosporaclim$lameness <- factor(Neosporaclim$lameness, levels = c("no", "nteval"
 Neosporaclim$breedsfixed1 <- factor(Neosporaclim$breedsfixed1, levels = c("Ayrshire Cross", "local-grade-X", "SHZ-X-Ayrshire", "SHZ-X-Fresian","SHZ-X-Jersey", "other"))
 
 Neosporaclim$calvingtroublereason <- factor(Neosporaclim$calvingtroublereason, levels = 
-                                                c("no", "uterine_problem", "cyst", "heat_detection",
-                                                  "insemination", "mineral_deficiency","old_age", "dkn", "NA"))
+                                              c("no", "uterine_problem", "cyst", "heat_detection",
+                                                "insemination", "mineral_deficiency","old_age", "dkn", "NA"))
 
 Neosporaclim$abortion <- factor(Neosporaclim$abortion, levels = c("no", "yes", "dkn", "NA"))
 
@@ -101,6 +101,3 @@ Neosporaclim$water <- factor(Neosporaclim$water, levels = c("river", "tap", "wel
 Neosporaclim$education <- factor(Neosporaclim$education, levels = c("none", "primary", "secondary","tertiary", "NA"))
 
 Neosporaclim$distance <- factor(Neosporaclim$distance, levels = c("less100", "100to500", "more500", "NA"))
-
-
-
