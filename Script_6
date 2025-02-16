@@ -1,3 +1,6 @@
+
+
+names(Neosporaclim)
 library(factoextra)
 library(dplyr)
 library(reshape2)
@@ -8,7 +11,7 @@ columns_to_select <- c("animalid", "pop_density","gps_altitude","wind_speed", "s
                         "bio14_37", "bio15_37", "bio16_37", "bio17_37", "bio18_37", "bio19_37")
 
 
-# Create a subset of Neo df poraclimser with selected columns
+# Create a subset of Neosporaclimser with selected columns
 Neo_subset <- Neosporaclim %>%
   dplyr:: select(all_of(columns_to_select))
 
@@ -53,7 +56,7 @@ pc1_subset <- pc1[1:num_rows]
 pc2_subset <- pc2[1:num_rows]
 pc3_subset <- pc3[1:num_rows]
 
-# Combining Neo df with the subsetted principal component scores
+# Combining Neosporaclimser with the subsetted principal component scores
 Neospora_with_pcs <- cbind(Neosporaclim, pc1_subset, pc2_subset, pc3_subset)
 
 loadings <- pca$rotation
