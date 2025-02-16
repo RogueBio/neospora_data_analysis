@@ -1,5 +1,3 @@
-## Script_7 PCA Model
-
 library(lmtest) 
 library(car) 
 Neospora_with_pcs$Calfnof <- as.factor(Neospora_with_pcs$Calfnof)
