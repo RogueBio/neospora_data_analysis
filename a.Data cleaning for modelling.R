@@ -1,0 +1,103 @@
+Neosporaclim$lameness <- factor(Neosporaclim$lameness, levels = c("no", "nteval", "yes", "NA"))
+Neosporaclim$breedsfixed1 <- factor(Neosporaclim$breedsfixed1, levels = c("Ayrshire Cross", "local-grade-X", "SHZ-X-Ayrshire", "SHZ-X-Fresian","SHZ-X-Jersey", "other"))
+Neosporaclim$calvingtroublereason <- factor(Neosporaclim$calvingtroublereason, levels = 
+                                              c("no", "uterine_problem", "cyst", "heat_detection",
+                                                "insemination", "mineral_deficiency","old_age", "dkn", "NA"))
+Neosporaclim$abortion <- factor(Neosporaclim$abortion, levels = c("no", "yes", "dkn", "NA"))
+Neosporaclim$abortionstatus <- factor(Neosporaclim$abortionstatus, levels = c("no", "yes", "dkn", "NA"))
+Neosporaclim$cont_pigs <- factor(Neosporaclim$cont_pigs, levels = c("no", "have_pig", "neigh_has_pig", "NA"))
+Neosporaclim$cont_goats <- factor(Neosporaclim$cont_goats, levels = c("no", "yes", "neigh_has_goat", "NA"))
+Neosporaclim$cont_dogs <- factor(Neosporaclim$cont_dogs, levels = c("no_dog", "yes", "neigh_has_dog", "NA"))
+Neosporaclim$rodents <- factor(Neosporaclim$rodents, levels = c("no", "yes"))
+Neosporaclim$calvingassist <- factor(Neosporaclim$calvingassist, levels = c("owner", "family", "respond", "outside", "NA"))
+Neosporaclim$placenta <- factor(Neosporaclim$placenta, levels = c("burn", "bury", "feed_other", "leave", "throw", "NA"))
+Neosporaclim$management <- factor(Neosporaclim$management, levels = c("pasture", "zero-graze", "zero-pasture", "NA"))
+Neosporaclim$water <- factor(Neosporaclim$water, levels = c("river", "tap", "well", "NA"))
+Neosporaclim$education <- factor(Neosporaclim$education, levels = c("none", "primary", "secondary","tertiary", "NA"))
+Neosporaclim$distance <- factor(Neosporaclim$distance, levels = c("less100", "100to500", "more500", "NA"))
+
+## TOPO VARIABLES
+## coerce into numeric
+Neosporaclim$gps_altitude <- as.numeric(Neosporaclim$gps_altitude)
+Neosporaclim$solar_radiation <- as.numeric(Neosporaclim$solar_radiation)
+Neosporaclim$wind_speed <- as.numeric(Neosporaclim$wind_speed)
+Neosporaclim$pop_density <- as.numeric(Neosporaclim$pop_density)
+
+Neosporaclim$rescaled_gps_altitude <- scale(Neosporaclim$gps_altitude)
+Neosporaclim$rescaled_solar_radiation <- scale(Neosporaclim$solar_radiation)
+Neosporaclim$rescaled_wind_speed <- scale(Neosporaclim$wind_speed)
+Neosporaclim$rescaled_pop_density <- scale(Neosporaclim$pop_density)
+
+Neosporaclim$bio1_37 <- as.numeric(Neosporaclim$bio1_37)
+Neosporaclim$bio2_37 <- as.numeric(Neosporaclim$bio2_37)
+Neosporaclim$bio3_37 <- as.numeric(Neosporaclim$bio3_37)
+Neosporaclim$bio4_37 <- as.numeric(Neosporaclim$bio4_37)
+Neosporaclim$bio5_37 <- as.numeric(Neosporaclim$bio5_37)
+Neosporaclim$bio6_37 <- as.numeric(Neosporaclim$bio6_37)
+Neosporaclim$bio7_37 <- as.numeric(Neosporaclim$bio7_37)
+Neosporaclim$bio8_37 <- as.numeric(Neosporaclim$bio8_37)
+Neosporaclim$bio9_37 <- as.numeric(Neosporaclim$bio9_37)
+Neosporaclim$bio10_37 <- as.numeric(Neosporaclim$bio10_37)
+Neosporaclim$bio11_37 <- as.numeric(Neosporaclim$bio11_37)
+Neosporaclim$bio12_37 <- as.numeric(Neosporaclim$bio12_37)
+Neosporaclim$bio13_37 <- as.numeric(Neosporaclim$bio13_37)
+Neosporaclim$bio14_37 <- as.numeric(Neosporaclim$bio14_37)
+Neosporaclim$bio15_37 <- as.numeric(Neosporaclim$bio15_37)
+Neosporaclim$bio16_37 <- as.numeric(Neosporaclim$bio16_37)
+Neosporaclim$bio17_37 <- as.numeric(Neosporaclim$bio17_37)
+Neosporaclim$bio18_37 <- as.numeric(Neosporaclim$bio18_37)
+Neosporaclim$bio19_37 <- as.numeric(Neosporaclim$bio19_37)
+
+
+Neosporaclim$rescaled_bio1_37 <- scale(Neosporaclim$bio1_37)
+Neosporaclim$rescaled_bio2_37 <- scale(Neosporaclim$bio2_37)
+Neosporaclim$rescaled_bio3_37 <- scale(Neosporaclim$bio3_37)
+Neosporaclim$rescaled_bio4_37 <- scale(Neosporaclim$bio4_37)
+Neosporaclim$rescaled_bio5_37 <- scale(Neosporaclim$bio5_37)
+Neosporaclim$rescaled_bio6_37 <- scale(Neosporaclim$bio6_37)
+Neosporaclim$rescaled_bio7_37 <- scale(Neosporaclim$bio7_37)
+Neosporaclim$rescaled_bio8_37 <- scale(Neosporaclim$bio8_37)
+Neosporaclim$rescaled_bio9_37 <- scale(Neosporaclim$bio9_37)
+Neosporaclim$rescaled_bio10_37 <- scale(Neosporaclim$bio10_37)
+Neosporaclim$rescaled_bio11_37 <- scale(Neosporaclim$bio11_37)
+Neosporaclim$rescaled_bio12_37 <- scale(Neosporaclim$bio12_37)
+Neosporaclim$rescaled_bio13_37 <- scale(Neosporaclim$bio13_37)
+Neosporaclim$rescaled_bio14_37 <- scale(Neosporaclim$bio14_37)
+Neosporaclim$rescaled_bio15_37 <- scale(Neosporaclim$bio15_37)
+Neosporaclim$rescaled_bio16_37 <- scale(Neosporaclim$bio16_37)
+Neosporaclim$rescaled_bio17_37 <- scale(Neosporaclim$bio17_37)
+Neosporaclim$rescaled_bio18_37 <- scale(Neosporaclim$bio18_37)
+Neosporaclim$rescaled_bio19_37 <- scale(Neosporaclim$bio19_37)
+
+
+Neosporaclim$lameness <- factor(Neosporaclim$lameness, levels = c("no", "nteval", "yes", "NA"))
+
+Neosporaclim$breedsfixed1 <- factor(Neosporaclim$breedsfixed1, levels = c("Ayrshire Cross", "local-grade-X", "SHZ-X-Ayrshire", "SHZ-X-Fresian","SHZ-X-Jersey", "other"))
+
+Neosporaclim$calvingtroublereason <- factor(Neosporaclim$calvingtroublereason, levels = 
+                                              c("no", "uterine_problem", "cyst", "heat_detection",
+                                                "insemination", "mineral_deficiency","old_age", "dkn", "NA"))
+
+Neosporaclim$abortion <- factor(Neosporaclim$abortion, levels = c("no", "yes", "dkn", "NA"))
+
+Neosporaclim$abortionstatus <- factor(Neosporaclim$abortionstatus, levels = c("no", "yes", "dkn", "NA"))
+
+Neosporaclim$cont_pigs <- factor(Neosporaclim$cont_pigs, levels = c("no", "have_pig", "neigh_has_pig", "NA"))
+
+Neosporaclim$cont_goats <- factor(Neosporaclim$cont_goats, levels = c("no", "yes", "neigh_has_goat", "NA"))
+
+Neosporaclim$cont_dogs <- factor(Neosporaclim$cont_dogs, levels = c("no_dog", "yes", "neigh_has_dog", "NA"))
+
+Neosporaclim$rodents <- factor(Neosporaclim$rodents, levels = c("no", "yes"))
+
+Neosporaclim$calvingassist <- factor(Neosporaclim$calvingassist, levels = c("owner", "family", "respond", "outside", "NA"))
+
+Neosporaclim$placenta <- factor(Neosporaclim$placenta, levels = c("burn", "bury", "feed_other", "leave", "throw", "NA"))
+
+Neosporaclim$management <- factor(Neosporaclim$management, levels = c("pasture", "zero-graze", "zero-pasture", "NA"))
+
+Neosporaclim$water <- factor(Neosporaclim$water, levels = c("river", "tap", "well", "NA"))
+
+Neosporaclim$education <- factor(Neosporaclim$education, levels = c("none", "primary", "secondary","tertiary", "NA"))
+
+Neosporaclim$distance <- factor(Neosporaclim$distance, levels = c("less100", "100to500", "more500", "NA"))
